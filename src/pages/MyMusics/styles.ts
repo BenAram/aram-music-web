@@ -1,17 +1,13 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+export const Container: any = styled.div`
     width: 100%;
-    height: 100%;
-    background-color: #616060;
+    height: ${(props: any) => props.shrink ? window.innerHeight - 100 : window.innerHeight}px;
 
     box-sizing: border-box;
     padding: 10px;
-`
 
-export const MusicsContainer = styled.div`
-    width: 100%;
-    height: 460px;
+    background-color: #616060;
     
     overflow: auto;
 
@@ -38,10 +34,37 @@ export const MusicsContainer = styled.div`
 
 export const MusicItem = styled.div`
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     width: 100%;
     height: 50px;
 
-    background-color: #d9dadc;
+    background-color: rgba(255, 255, 255, 0.15);
     margin: 5px 0;
+
+    box-sizing: border-box;
+    padding: 5px 15px;
+
+    cursor: pointer;
+`
+
+export const MusicInfo: any = styled.div`
+    height: 50px;
+    width: 400px;
+
+    box-sizing: border-box;
+    padding: 5px;
+
+    display: flex;
+`
+
+export const MusicImg = styled.img`
+    width: 60px;
+    height: 30px;
+`
+
+export const MusicName = styled.p`
+    color: #d9dadc;
+    margin: 0 5px;
 `

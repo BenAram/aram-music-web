@@ -43,9 +43,9 @@ export const InfoContainer = styled.div`
     align-items: flex-end;
 `
 
-export const InfoImg: any = styled.img`
-    width: ${(props: any) => props.hasImage ? 150 : 100}px;
-    height: ${(props: any) => props.hasImage ? 75 : 100}px;
+export const InfoImg = styled.img`
+    width: 100px;
+    height: 100px;
 
     margin: 0 10px;
 `

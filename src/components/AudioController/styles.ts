@@ -8,7 +8,7 @@ export const Container = styled.div`
     display: flex;
 `
 
-export const MusicInfoContainer = styled.div`
+export const MusicInfoContainer: any = styled.div`
     width: 25%;
     height: 100%;
 
@@ -16,6 +16,8 @@ export const MusicInfoContainer = styled.div`
     padding: 10px;
 
     display: flex;
+
+    cursor: pointer;
 `
 
 export const MusicInfoImage = styled.img`

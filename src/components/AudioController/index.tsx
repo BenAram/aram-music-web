@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import Slider from 'react-input-slider'
 import {
     Rewind,
@@ -36,20 +37,51 @@ import {
     ControllerButton
 } from './styles'
 
+import api from '../../services/api'
 import url from '../../services/url'
 
+const initialState: Music = {
+    access: 0,
+    createdAt: '',
+    description: '',
+    editable: false,
+    id: 0,
+    keywords: [],
+    music_background: '',
+    name: '',
+    name_upload: '',
+    type: '',
+    user_owner: {
+        avatar: '',
+        name: ''
+    }
+}
+
 function AudioController(): JSX.Element {
+
+    const email = localStorage.getItem('email')
+    const token = localStorage.getItem('token')
 
     const audio = useSelector((store: any) => store.audio)
     const music: Music = useSelector((store: any) => store.music)
     const playlist: StoreStatePlaylist = useSelector((store: any) => store.playlist)
     const dispatch = useDispatch()
 
+    const history = useHistory()
+
     const [volume, setVolume] = useState<number>(0)
     const [paused, setPaused] = useState<boolean>(false)
     const [looping, setLooping] = useState<boolean>(false)
     const [currentTime, setCurrentTime] = useState<number>(0)
     const [duration, setDuration] = useState<number>(0)
+
+    function handleSeeMusic() {
+        if (playlist.isPlaylist) {
+            history.push(`/app/music/${playlist.musics[playlist.index].id}`)
+        } else {
+            history.push(`/app/music/${music.id}`)
+        }
+    }
 
     function handleRewind(): void {
         if (playlist.isPlaylist) {
@@ -148,8 +180,32 @@ function AudioController(): JSX.Element {
     function goNextMusic() {
         const { index } = playlist
         if (index + 1 >= playlist.musics.length) {
-            audio.currentTime = audio.duration
-            setPaused(true)
+            const musicsJSON = sessionStorage.getItem('musics')
+            if (musicsJSON) {
+                const musics = JSON.parse(musicsJSON)
+                async function getMusic(){
+                    try {
+                        let index: number = 0
+                        if (musics[index]) {
+                            const { data } = await api.get(`/music/${musics[index]}`)
+                            if (!data.error) {
+                                dispatch({ type: 'disactive-playlist' })
+                                dispatch({ type: 'change-music', payload: data })
+                                musics.splice(index, 1)
+                                sessionStorage.setItem('musics', JSON.stringify(musics))
+                            } else {
+                                index++
+                                getMusic()
+                            }
+                        }
+                    } catch(err) {
+                        alert('Ocorreu um erro')
+                    }
+                }
+                getMusic()
+            } else {
+                setPaused(true)
+            }
         } else {
             dispatch({ type: 'up-playlist' })
         }
@@ -168,8 +224,37 @@ function AudioController(): JSX.Element {
             setDuration(audio.duration)
             setLooping(false)
         },
-        ended(){
-            setPaused(true)
+        ended() {
+            const musicsJSON = sessionStorage.getItem('musics')
+            
+            let index: number = 0
+
+            let musics: Array<string> = []
+            if (musicsJSON) {
+                musics = JSON.parse(musicsJSON)
+            }
+            if (musics[index]) {
+                try {
+                    async function getMusic() {
+                        if (musics[index]) {
+                            const { data } = await api.get(`/music/${musics[index]}`)
+                            if (!data.error) {
+                                dispatch({ type: 'change-music', payload: data })
+                                musics.splice(index, 1)
+                                sessionStorage.setItem('musics', JSON.stringify(musics))
+                            } else {
+                                index++
+                                getMusic()
+                            }
+                        }
+                    }
+                    getMusic()
+                } catch(err) {
+                    alert('Ocorreu um erro')
+                }
+            } else {
+                setPaused(true)
+            }
         }
     }
 
@@ -177,6 +262,12 @@ function AudioController(): JSX.Element {
         if (!playlist.isPlaylist) {
             audio.pause()
             dispatch({ type: 'source-audio', payload: music.name_upload })
+            api.get(`/audio/access/${music.name_upload}`, {
+                headers: {
+                    email,
+                    token
+                }
+            }).then().catch()
         }
     }, [music.name_upload, playlist.isPlaylist])
     useEffect(() => {
@@ -184,6 +275,12 @@ function AudioController(): JSX.Element {
             const { index } = playlist
             audio.pause()
             dispatch({ type: 'source-audio', payload: playlist.musics[index].name_upload })
+            api.get(`/audio/access/${playlist.musics[index].name_upload}`, {
+                headers: {
+                    email,
+                    token
+                }
+            }).then().catch()
         }
     }, [playlist.index, playlist.isPlaylist])
 
@@ -197,6 +294,8 @@ function AudioController(): JSX.Element {
             dispatch({ type: 'clean-audio' })
             dispatch({ type: 'clean-music' })
             dispatch({ type: 'clean-playlist' })
+
+            sessionStorage.removeItem('musics')
         }
 
         const volumeStorage: any = localStorage.getItem('volume')
@@ -220,7 +319,7 @@ function AudioController(): JSX.Element {
     }, [])
 
     return <Container>
-        <MusicInfoContainer>
+        <MusicInfoContainer onClick={handleSeeMusic}>
             <MusicInfoImage
                 src={!playlist.isPlaylist ? `${url}/music-bg/${music.music_background}` :
                 `${url}/music-bg/${playlist.musics[playlist.index].music_background}`}

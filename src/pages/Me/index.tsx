@@ -61,17 +61,19 @@ function User(): JSX.Element {
     const [loading, setLoading] = useState<boolean>(false)
 
     function handleChangeAvatar() {
-        const file = avatarInput.current.files[0]
-        const fileReader = new FileReader()
+        if (avatarInput.current && avatarInput.current.files[0]) {
+            const file = avatarInput.current.files[0]
+            const fileReader = new FileReader()
 
-        fileReader.onloadend = () => {
-            setAvatar({
-                name: file.name,
-                type: file.type,
-                uri: fileReader.result as string
-            })
+            fileReader.onloadend = () => {
+                setAvatar({
+                    name: file.name,
+                    type: file.type,
+                    uri: fileReader.result as string
+                })
+            }
+            fileReader.readAsDataURL(file)
         }
-        fileReader.readAsDataURL(file)
     }
 
     async function handleSaveChanges() {

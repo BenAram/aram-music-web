@@ -11,11 +11,20 @@ declare interface Music {
         name: string
     }
     music_background: string
+    id: number
+    createdAt: string
+    editable: boolean
+}
+declare interface CustomCoordinates {
+    x: number
+    y: number
 }
 declare interface Playlist {
     name: string
     musics: Array<Music>
     public: boolean
+    editable?: boolean
+    id: number
 }
 declare interface StoreStatePlaylist {
     isPlaylist: boolean

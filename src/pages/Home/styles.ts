@@ -41,9 +41,8 @@ export const MusicsContainer = styled.div`
     }
 `
 
-export const MusicItem = styled.button`
+export const MusicItem: any = styled.button`
     position: relative;
-
     width: 194.56px;
     height: 90%;
 
@@ -73,7 +72,7 @@ export const MusicItem = styled.button`
     }
 `
 
-export const MusicItemImage = styled.img`
+export const MusicItemImage: any = styled.img`
     width: 184.56px;
     height: 78%;
 
@@ -86,8 +85,8 @@ export const MusicItemImage = styled.img`
 
 export const MusicItemButton = styled.button`
     position: absolute;
-    left: 80%;
-    bottom: 20%;
+    left: 75%;
+    bottom: 25%;
 
     width: 30px;
     height: 30px;
@@ -115,6 +114,6 @@ export const MusicItemButton = styled.button`
     }
 `
 
-export const MusicItemName = styled.p`
+export const MusicItemName: any = styled.p`
     color: #d9dadc;
 `

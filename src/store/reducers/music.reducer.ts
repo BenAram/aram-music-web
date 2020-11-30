@@ -11,7 +11,10 @@ const initialState: Music = {
     user_owner: {
         avatar: '',
         name: ''
-    }
+    },
+    id: 0,
+    createdAt: '',
+    editable: false
 }
 
 interface Actions {

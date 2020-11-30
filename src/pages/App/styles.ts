@@ -64,18 +64,20 @@ export const NavSubtitle = styled.p`
     color: #d9dadc;
 `
 
-export const NavPlaylistItem = styled.button`
+export const NavPlaylistItem: any = styled.button`
     width: 100%;
     height: 30px;
     
     margin: 5px 0;
 
     display: flex;
+    align-items: center;
 `
 
 export const NavPlaylistImage = styled.img`
     width: 50px;
     height: 100%;
+    border-radius: 5px;
 `
 
 export const NavPlaylistImageDiv = styled.div`
@@ -89,6 +91,16 @@ export const NavPlaylistInfoContainer = styled.div`
     flex-direction: column;
 
     margin-left: 10px;
+`
+
+export const NavPlaylistInput = styled.input`
+    color: #d9dadc;
+    background-color: rgba(255, 255, 255, 0.2);
+
+    width: 80%;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    padding: 0 5px;
 `
 
 export const NavPlaylistName = styled.strong`

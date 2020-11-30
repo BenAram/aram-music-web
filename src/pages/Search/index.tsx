@@ -34,24 +34,8 @@ function Search(): JSX.Element {
     const [searchValue, setSearchValue] = useState<string>('')
 
     function handleSearchByType(type: MusicType): Function {
-        return async function () {
-            try {
-                const { data } = await api.get(`/audio/type/${type.value}`)
-                dispatch({ type: 'disactive-playlist-editable' })
-                if (data.error) {
-                    dispatch({ type: 'change-playlist-to-see', payload: [] })
-                    dispatch({ type: 'rename-playlist-to-see', payload: type.label })
-                    dispatch({ type: 'rename-playlist-to-see-owner', payload: 'System' })
-                    history.push('/app/playlist')
-                } else {
-                    dispatch({ type: 'change-playlist-to-see', payload: data })
-                    dispatch({ type: 'rename-playlist-to-see', payload: type.label })
-                    dispatch({ type: 'rename-playlist-to-see-owner', payload: 'System' })
-                    history.push('/app/playlist')
-                }
-            } catch(err) {
-                alert('Um erro ocorreu.')
-            }
+        return function () {
+            history.push(`/app/genre/${type.value}`)
         }
     }
 

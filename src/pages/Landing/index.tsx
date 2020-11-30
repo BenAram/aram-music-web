@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { User, AtSign, Lock, X, Check } from 'react-feather'
+import { User, AtSign, Lock, X } from 'react-feather'
 
 import {
     LoadingContainer,
@@ -13,9 +13,6 @@ import {
     TextInput,
     LoginContainer,
     CheckboxLabel,
-    CheckboxInput,
-    UncheckedDiv,
-    CheckedDiv,
     CheckboxP,
     LoginButton,
     LoginText,
@@ -24,6 +21,7 @@ import {
     CreateAccountButton
 } from './styles'
 
+import Checkbox from '../../components/Checkbox'
 import Header from '../../components/Header'
 import Divider from '../../components/Divider'
 
@@ -52,15 +50,12 @@ function Landing(): JSX.Element {
 
     const [didMount, setDidMount] = useState<boolean>(false)
 
-    function handleToggleRememberMe(): void {
-        setRememberMe(!rememberMe)
-    }
-
     function handleToggleCreateAccount(): void {
         setCreateAccount(!createAccount)
     }
 
     async function handleLogin() {
+        const url = sessionStorage.getItem('url')
         setLoading(true)
         try {
             if (createAccount) {
@@ -79,7 +74,7 @@ function Landing(): JSX.Element {
                     if (rememberMe) {
                         localStorage.setItem('rememberme', 'true')
                     }
-                    history.push('/app')
+                    history.push(url || '/app')
                 }
             } else {
                 const { data } = await api.post('/login', {
@@ -95,7 +90,7 @@ function Landing(): JSX.Element {
                     if (rememberMe) {
                         localStorage.setItem('rememberme', 'true')
                     }
-                    history.push('/app')
+                    history.push(url || '/app')
                 }
             }
         } catch(err) {
@@ -196,18 +191,11 @@ function Landing(): JSX.Element {
         </Interface>
         <LoginContainer>
                 <CheckboxLabel>
-                    <CheckboxInput
-                        type="checkbox"
-                        checked={rememberMe}
-                        onChange={handleToggleRememberMe}
+                    <Checkbox
                         disabled={loading}
+                        checked={rememberMe}
+                        setChecked={setRememberMe}
                     />
-                    {rememberMe ? <CheckedDiv>
-                        <Check
-                            color="#d9dadc"
-                            size={20}
-                        />
-                    </CheckedDiv> : <UncheckedDiv/>}
                     <CheckboxP>Lembrar de mim</CheckboxP>
                 </CheckboxLabel>
                 <LoginButton
