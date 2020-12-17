@@ -1,2 +1,2 @@
-const ip: string = 'api.benaram.com'
-export default `http://${ip}:888`
+const ip: string = 'api.aram.app.br'
+export default `https://${ip}`

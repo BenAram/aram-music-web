@@ -2,7 +2,7 @@
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.benaramcompany.music",
+    "package_name": "br.app.aram.music",
     "sha256_cert_fingerprints":
     ["68:74:5C:9F:11:D0:F1:64:79:9F:DE:8D:DA:CE:E1:F0:AF:09:A5:05:A0:71:3E:9E:C3:E4:BE:52:CD:24:9D:F4"]
   }
