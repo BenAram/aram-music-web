@@ -47,7 +47,8 @@ const initialState: Music = {
     type: '',
     user_owner: {
         avatar: '',
-        name: ''
+        name: '',
+        id: 0
     },
     createdAt: '',
     editable: false
@@ -190,6 +191,10 @@ function Music(): JSX.Element {
         }, 1)
     }
 
+    function handleOpenUserPage(id: number) {
+        history.push(`/app/user/${id}`)
+    }
+
     useEffect(() => {
         async function run() {
             try {
@@ -293,7 +298,9 @@ function Music(): JSX.Element {
                         </InputContainer> :
                         <p>{music.name}</p>}
                     </div>
-                    <MainInfoAvatarContainer>
+                    <MainInfoAvatarContainer
+                        onClick={() => handleOpenUserPage(music.user_owner.id)}
+                    >
                         <MainInfoAvatar
                             src={music.user_owner.avatar ? `${url}/avatar/${music.user_owner.avatar}` : logo}
                         />

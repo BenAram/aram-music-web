@@ -9,6 +9,7 @@ declare interface Music {
     user_owner: {
         avatar: string
         name: string
+        id: number
     }
     music_background: string
     id: number

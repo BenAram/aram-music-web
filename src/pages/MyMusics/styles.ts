@@ -7,7 +7,7 @@ export const Container: any = styled.div`
     box-sizing: border-box;
     padding: 10px;
 
-    background-color: #616060;
+    background-color: #36393f;
     
     overflow: auto;
 

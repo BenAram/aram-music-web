@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.div`
     width: 100%;
     height: 100%;
-    background-color: #616060;
+    background-color: #36393f;
 
     display: flex;
     flex-direction: column;
@@ -90,7 +90,7 @@ export const MainInfo = styled.div`
     justify-content: space-between;
 `
 
-export const MainInfoAvatarContainer = styled.div`
+export const MainInfoAvatarContainer = styled.button`
     display: flex;
     align-items: center;
 `
@@ -105,6 +105,9 @@ export const MainInfoAvatar = styled.img`
 
 export const MainInfoName = styled.p`
     font-size: 16px;
+    font-family: 'Nunito', Arial, Helvetica, sans-serif;
+    text-align: left;
+    color: #d9dadc;
 `
 
 export const MainPlayContainer = styled.div`

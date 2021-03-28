@@ -190,6 +190,7 @@ function Upload() {
         <Header>
             <HeaderImg
                 src={logo}
+                alt="Logo do app"
             />
             <HeaderText>Poste uma música de sua preferência</HeaderText>
         </Header>

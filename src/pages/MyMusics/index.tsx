@@ -32,7 +32,8 @@ const initialState: Music = {
     type: '',
     user_owner: {
         name: '',
-        avatar: ''
+        avatar: '',
+        id: 0
     }
 }
 

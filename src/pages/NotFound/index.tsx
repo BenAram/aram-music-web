@@ -21,7 +21,7 @@ function NotFound(props: NotFoundInterface): JSX.Element {
     }
 
     return <Container inserted={props.inserted}>
-        <img src={logo} />
+        <img src={logo} style={{ width: 200, height: 200 }} />
         <Title>Página inexistente</Title>
         <Button onClick={goBack}>
             <p>Clique aqui para voltar</p>
